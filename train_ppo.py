@@ -8,15 +8,21 @@ import matplotlib.pyplot as plt
 import base64, io
 import numpy as np
 from collections import deque, namedtuple
-from IPython.display import HTML
-from IPython import display 
 import glob
 
 from algorithms.ppo import episode, Agent
 from trainer import train_ppo as train
+from gym.envs.registration import register
+from custom_env import *
 
 # Code adapted from:
 # https://goodboychan.github.io/python/reinforcement_learning/pytorch/udacity/2021/05/07/DQN-LunarLander.html
+
+register(
+    id='CustomEnv',
+    entry_point='custom_env:EnvironmentWrapper',
+    max_episode_steps=300,
+)
 
 def main():
     # Setup
@@ -26,7 +32,7 @@ def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     # Make environment
-    env = gym.make('LunarLander-v2')
+    env = gym.make('CustomEnv')
     print('State shape: ', env.observation_space.shape)
     print('Number of actions: ', env.action_space.n)
     state_dim = np.prod(env.observation_space.shape)

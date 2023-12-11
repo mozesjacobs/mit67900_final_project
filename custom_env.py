@@ -20,7 +20,7 @@ class EnvironmentWrapper(gym.Env):
         self.board.restart()
         self.board.move_enemies()
         obs = np.array(self.board.get_data(), dtype=int)
-        return obs
+        return obs, {0:0}
 
     def step(self, action):
         r = self.board.move_agent(action)
@@ -28,7 +28,8 @@ class EnvironmentWrapper(gym.Env):
         done = not(self.board.is_alive())
         info = {}  # Additional information (optional)
 
-        return observation, r, done, info
+        return observation, r, done, done, info
+
 
 test = False
 
