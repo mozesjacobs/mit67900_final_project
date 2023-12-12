@@ -80,6 +80,12 @@ class Agent():
                 experiences = self.memory.sample(self.device)
                 self.learn(experiences, self.gamma)
 
+    def predict(self, state, eps=0., deterministic=True):
+        """
+        Wrapper for `act function
+        """
+        return self.act(state, eps), 0
+
     def act(self, state, eps=0.):
         """Returns actions for given state as per current policy.
         

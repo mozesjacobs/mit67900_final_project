@@ -4,6 +4,15 @@ import numpy as np
 
 from sb3_contrib import TRPO
 # from algorithms.trpo import PolicyNetwork
+from gymnasium.envs.registration import register
+from custom_env import *
+from utils import compute_average_reward
+
+register(
+    id='CustomEnv',
+    entry_point='custom_env:EnvironmentWrapper',
+    max_episode_steps=300,
+)
 
 
 # Code adapted from:
@@ -18,7 +27,7 @@ def main():
 
     # Make environment
     # env = gym.make('LunarLander-v2')
-    env = gym.make("MountainCar-v0")
+    env = gym.make("CustomEnv")
     print('State shape: ', env.observation_space.shape)
     print('Number of actions: ', env.action_space.n)
     state_dim = np.prod(env.observation_space.shape)
@@ -47,7 +56,7 @@ def main():
         gae_lambda=gae_lambda,
         batch_size=batch_size,
         policy_kwargs=policy_kwargs,
-        verbose=1
+        verbose=0
     )
     # Build agent
     avg_r = compute_average_reward(agent, env)
@@ -57,26 +66,6 @@ def main():
     avg_r = compute_average_reward(agent, env)
     print(f'Average reward after training: {avg_r}')
     return agent
-
-def compute_average_reward(model, env, num_runs=100):
-    all_rewards = []
-
-    for _ in range(num_runs):
-        obs, _ = env.reset()
-        total_reward = 0
-
-        while True:
-            action, _ = model.predict(obs, deterministic=True)
-            obs, reward, terminated, truncated, _ = env.step(action)
-            total_reward += reward
-
-            if terminated or truncated:
-                break
-
-        all_rewards.append(total_reward)
-
-    average_reward = np.mean(all_rewards)
-    return average_reward
 
 if __name__ == "__main__":
     main()

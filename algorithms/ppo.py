@@ -72,6 +72,12 @@ class Agent():
 
         self.loss_func = nn.MSELoss()
 
+    def predict(self, state, deterministic=True):
+        """
+        Wrapper for `act` function.
+        """
+        return self.act(state), 0
+
     def act(self, state):
         return self.actor_critic.act(state)
     

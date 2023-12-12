@@ -1,11 +1,14 @@
-from gym.wrappers.monitoring import video_recorder
+from gymnasium.wrappers.monitoring import video_recorder
+import numpy as np
+import matplotlib.pyplot as plt
 
-fig = plt.figure()
-ax = fig.add_subplot(111)
-plt.plot(np.arange(len(scores)), scores)
-plt.ylabel('Score')
-plt.xlabel('Episode #')
-plt.show()
+def show_figure():
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    plt.plot(np.arange(len(scores)), scores)
+    plt.ylabel('Score')
+    plt.xlabel('Episode #')
+    plt.show()
 
 def show_video(env_name):
     mp4list = glob.glob('video/*.mp4')
@@ -35,6 +38,38 @@ def show_video_of_model(agent, env_name):
         state, reward, done, _ = env.step(action)        
     env.close()
 
-show_video_of_model(agent, 'LunarLander-v2')
+def compute_average_reward(model, env, num_runs=100, nb_pos_r=True):
+    """
+    Compute average reward of the model over `num_runs` runs.
+    If `nb_pos_r`, also compute the average number of times the
+    agent received positive rewards per run.
+    """
+    all_rewards = 0
+    all_pos_rewards = 0
 
-show_video('LunarLander-v2')
+    for _ in range(num_runs):
+        obs, _ = env.reset()
+        total_reward = 0
+        pos_reward = 0
+        while True:
+            action, _ = model.predict(obs, deterministic=True)
+            obs, reward, terminated, truncated, _ = env.step(action)
+            total_reward += reward
+            if reward > 0:
+                pos_reward += 1
+
+            if terminated or truncated:
+                break
+
+        all_rewards += total_reward
+        all_pos_rewards += pos_reward
+
+    all_rewards /= num_runs
+    all_pos_rewards /= num_runs
+    if nb_pos_r:
+        return all_rewards, all_pos_rewards
+    return all_rewards
+
+# show_video_of_model(agent, 'LunarLander-v2')
+
+# show_video('LunarLander-v2')

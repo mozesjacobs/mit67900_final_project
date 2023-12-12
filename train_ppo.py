@@ -1,19 +1,10 @@
-import gym
-import random
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
-import matplotlib.pyplot as plt
-import base64, io
-import numpy as np
-from collections import deque, namedtuple
-import glob
 
 from algorithms.ppo import episode, Agent
 from trainer import train_ppo as train
-from gym.envs.registration import register
+from gymnasium.envs.registration import register
 from custom_env import *
+from utils import compute_average_reward
 
 # Code adapted from:
 # https://goodboychan.github.io/python/reinforcement_learning/pytorch/udacity/2021/05/07/DQN-LunarLander.html
@@ -55,10 +46,17 @@ def main():
     # Build agent
     agent = Agent(gamma, epsilon, beta, delta, c1, c2, k_epoch, 
                   state_dim, action_dim, lr, lr, hidden_dim, batch_size)
-    
+
+    avg_r = compute_average_reward(agent, env)
+    print(f'Average reward, avg. number of positive rewards before training: {avg_r}')
+
     # Train
     scores = train(agent, env, episode, 'ppo', max_episodes, max_t)
 
+    avg_r = compute_average_reward(agent, env)
+    print(f'Average reward, avg. number of positive rewards after training: {avg_r}')
+
+    return agent
 
 if __name__ == "__main__":
     main()
