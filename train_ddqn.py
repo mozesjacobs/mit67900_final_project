@@ -1,10 +1,13 @@
 import torch
+import numpy as np
+import gymnasium as gym
+from gymnasium.envs.registration import register
 
 from algorithms.ddqn import episode, Agent
 from trainer import train
-from custom_env import *
+from custom_env import EnvironmentWrapper
 from utils import compute_average_reward
-from gymnasium.envs.registration import register
+
 
 register(
     id='CustomEnv',
@@ -48,7 +51,7 @@ def main():
     print(f'Average reward before training: {avg_r}')
 
     # Train
-    scores = train(agent, env, 'ddqn', max_episodes, max_t, eps_start, eps_end, eps_decay)
+    scores = train(agent, env, episode, 'ddqn', max_episodes, max_t, eps_start, eps_end, eps_decay)
 
     avg_r = compute_average_reward(agent, env)
     print(f'Average reward after training: {avg_r}')

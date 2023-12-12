@@ -146,6 +146,24 @@ class Agent():
         # Save experience in replay memory
         self.memory.add(state, action, reward, next_state, done)
 
+        # Obtain previous trajectory
+        states, actions, rewards, next_states, dones = self.memory.sample(self.device)
+
+        # LOSS FROM
+        # https://github.com/jcborges/FCQ/tree/master
+        
+        # Compute
+        q_next = self.qnetwork(next_states).detach()
+        q_next_max = torch.max(q_next, 1)[0].view(-1) 
+        q_target = rewards.view(-1) + q_next_max * (1 - dones.view(-1))
+        q_local = self.qnetwork(states).gather(1, actions.view(-1, 1)).view(-1)
+
+        # Loss
+        loss = self.loss_func(q_local, q_target)
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+
     def act(self, state, eps=0.):
         """Returns actions for given state as per current policy.
         
@@ -165,32 +183,6 @@ class Agent():
             return np.argmax(action_values.cpu().data.numpy())
         else:
             return random.choice(np.arange(self.action_size))
-
-    def learn(self):
-        """Update value parameters using given batch of experience tuples.
-
-        Params
-        ======
-            experiences (Tuple[torch.Variable]): tuple of (s, a, r, s', done) tuples 
-            gamma (float): discount factor
-        """
-        # Obtain previous trajectory
-        states, actions, rewards, next_states, dones = self.memory.sample(self.device)
-
-        # LOSS FROM
-        # https://github.com/jcborges/FCQ/tree/master
-        
-        # Compute
-        q_next = self.qnetwork(next_states).detach()
-        q_next_max = torch.max(q_next, 1)[0].view(-1) 
-        q_target = rewards.view(-1) + q_next_max * (1 - dones.view(-1))
-        q_local = self.qnetwork(states).gather(1, actions.view(-1, 1)).view(-1)
-
-        # Loss
-        loss = self.loss_func(q_local, q_target)
-        self.optimizer.zero_grad()
-        loss.backward()
-        self.optimizer.step()
 
     def save(self, path):
         torch.save(self.qnetwork.state_dict(), path + ".pt")

@@ -1,18 +1,18 @@
-import gym
-import random
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
-import matplotlib.pyplot as plt
-import base64, io
 import numpy as np
-from IPython.display import HTML
-from IPython import display 
-import glob
+import gymnasium as gym
+from gymnasium.envs.registration import register
 
 from algorithms.fittedq import episode, Agent
 from trainer import train
+from custom_env import EnvironmentWrapper
+from utils import compute_average_reward
+
+register(
+    id='CustomEnv',
+    entry_point='custom_env:EnvironmentWrapper',
+    max_episode_steps=300,
+)
 
 # Code adapted from:
 # https://goodboychan.github.io/python/reinforcement_learning/pytorch/udacity/2021/05/07/DQN-LunarLander.html
@@ -23,7 +23,8 @@ def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     # Make environment
-    env = gym.make('LunarLander-v2')
+    #env = gym.make('LunarLander-v2')
+    env = gym.make('CustomEnv')
     print('State shape: ', env.observation_space.shape)
     print('Number of actions: ', env.action_space.n)
     state_dim = np.prod(env.observation_space.shape)
