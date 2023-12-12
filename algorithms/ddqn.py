@@ -1,9 +1,7 @@
 import random
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.optim as optim
-
 import numpy as np
 from collections import deque, namedtuple
 
@@ -14,28 +12,6 @@ from collections import deque, namedtuple
 # DDQN loss function from:
 # https://github.com/fschur/DDQN-with-PyTorch-for-OpenAI-Gym/blob/master/DDQN_discrete.py
 
-def episode(agent, env, eps, max_t):
-    """Deep Q-Learning.
-    
-    Params
-    ======
-        n_episodes (int): maximum number of training episodes
-        max_t (int): maximum number of timesteps per episode
-        eps_start (float): starting value of epsilon, for epsilon-greedy action selection
-        eps_end (float): minimum value of epsilon
-        eps_decay (float): multiplicative factor (per episode) for decreasing epsilon
-    """
-    state, _ = env.reset()
-    score = 0
-    for t in range(max_t):
-        action = agent.act(state, eps)
-        next_state, reward, done, _, _ = env.step(action)
-        agent.step(state, action, reward, next_state, done)
-        state = next_state
-        score += reward
-        if done:
-            break
-    return score
 
 class Agent():
     """Interacts with and learns from the environment."""
@@ -51,7 +27,6 @@ class Agent():
         """
         self.state_size = state_size
         self.action_size = action_size
-        self.seed = random.seed(seed)
         self.batch_size = batch_size
         self.update_interval = update_interval
         self.gamma = gamma
@@ -67,6 +42,8 @@ class Agent():
         self.memory = ReplayBuffer(action_size, buffer_size, batch_size, seed)
         # Initialize time step (for updating every UPDATE_EVERY steps)
         self.t_step = 0
+
+        self.loss_func = nn.MSELoss()
     
     def step(self, state, action, reward, next_state, done):
         # Save experience in replay memory
@@ -127,7 +104,7 @@ class Agent():
         q_target = rewards.view(-1) + (1 - dones.view(-1)) * gamma * q_next_target_max
 
         # Loss
-        loss = F.mse_loss(q_local, q_target)
+        loss = self.loss_func(q_local, q_target)
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
@@ -168,13 +145,14 @@ class QNetwork(nn.Module):
         self.fc1 = nn.Linear(state_size, 64)
         self.fc2 = nn.Linear(64, 64)
         self.fc3 = nn.Linear(64, action_size)
+        self.relu = nn.ReLU()
         
     def forward(self, state):
         """Build a network that maps state -> action values."""
         x = self.fc1(state)
-        x = F.relu(x)
+        x = self.relu(x)
         x = self.fc2(x)
-        x = F.relu(x)
+        x = self.relu(x)
         return self.fc3(x)
 
 class ReplayBuffer:
