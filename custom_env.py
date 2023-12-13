@@ -527,7 +527,7 @@ class Q_Agent:
 
         self.optimizer = keras.optimizers.Adam(learning_rate=self.eta)
 
-        self.loss_funktion = keras.losses.Huber()
+        self.loss_function = keras.losses.Huber()
 
         self.board = board
 
@@ -553,36 +553,32 @@ class Q_Agent:
             return (prob.index(max(prob)), self.board.get_data(prob.index(max(prob))))
         return (chosen_dir, self.board.get_data(chosen_dir))
 
-    def train(self, rounds=10, temperature_l=None):
-        '''
-        train agents with
-        rounds - amount of training rounds
-        analyse - save analyse data
-        temperature_l - list of temeratures of length rounds, if None temperature is set to 0.01
-        '''
-        real_reinforcement_list = np.zeros([rounds])
-        lifetime = np.zeros([rounds])
-        food_found = np.zeros([rounds])
-        energy = np.zeros([rounds])
-        for i in tqdm(range(rounds)):
+    def train(self, nb_timesteps):
+        """
+        Train for `nb_timesteps` time teps.
+        :param nb_timesteps: number of time steps.
+        :return:
+        """
+        real_reinforcement_list = []
+        food_found = []
+        counter = 0
+        self.temperature = 0.01
+        while counter < nb_timesteps:
             real_reinforcement = 0
-            if temperature_l is None:
-                # self.temperature= max(min(10/(i+1),0.3),0.01)
-                self.temperature = 0.01
-            else:
-                self.temperature = temperature_l[i]
 
             # play moves until agent dies
-            while (self.board.is_alive()):
+            while self.board.is_alive() and self.board.Food_number != 0:
+                counter += 1
+                if counter % (nb_timesteps/10) == 0:
+                    print(f'{100*counter/nb_timesteps}% of training completed')
                 self.board.move_enemies()
-                x = self.board.get_data()
                 direction, turned_x = self.select_action()
 
                 r = self.board.move_agent(direction=direction)
 
                 real_reinforcement = r + self.discount_factor * real_reinforcement
 
-                loss_funktion = self.loss_funktion
+                loss_function = self.loss_function
 
                 l = []
                 for j in range(4):
@@ -593,20 +589,18 @@ class Q_Agent:
                 # Backprop net
                 with GradientTape() as tape:
                     old_u = self.net(expand_dims(turned_x, 0))
-                    loss_value = loss_funktion(u_prime, old_u)
+                    loss_value = loss_function(u_prime, old_u)
 
                 # Update the weights of net to minimize the loss value.
                 gradients = tape.gradient(loss_value, self.net.trainable_weights)
                 self.optimizer.apply_gradients(zip(gradients, self.net.trainable_weights))
 
-            real_reinforcement_list[i] = real_reinforcement
-            lifetime[i] = self.board.time
-            food_found[i] = self.board.food_found
-            energy[i] = self.board.energy
+            real_reinforcement_list.append(real_reinforcement)
+            food_found.append(self.board.food_found)
 
             self.board.restart()
 
-        return (real_reinforcement_list, lifetime, food_found, energy)
+        return (real_reinforcement_list, food_found)
 
     def get_plot_data(self, rounds=300):
 
