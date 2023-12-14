@@ -1,0 +1,47 @@
+sending incremental file list
+trainer.py
+exp2/
+exp2/hostname_12611908.err
+exp2/hostname_12611908.out
+exp2/results/fittedq/
+exp6/hostname_12611381.err
+exp6/hostname_12611381.out
+exp6/hostname_12611385.out
+exp6/results/ddqn/
+exp6/results/ddqn/cp_local.pt
+exp6/results/ddqn/cp_target.pt
+exp6/results/ddqn/logfile.txt
+exp6/results/ddqn/score.npy
+exp6/results/trpo/
+exp6/results/trpo/cp.zip
+exp6/results/trpo/logfile.txt
+exp7/hostname_12611452.err
+exp7/hostname_12611452.out
+exp7/hostname_12611453.err
+exp7/hostname_12611453.out
+exp7/hostname_12611454.err
+exp7/hostname_12611454.out
+exp7/hostname_12611455.err
+exp7/hostname_12611455.out
+exp7/results/ddqn/
+exp7/results/ddqn/cp_local.pt
+exp7/results/ddqn/cp_target.pt
+exp7/results/ddqn/logfile.txt
+exp7/results/ddqn/score.npy
+exp7/results/fittedq/
+exp7/results/fittedq/cp_.pt
+exp7/results/fittedq/logfile.txt
+exp7/results/fittedq/score.npy
+exp7/results/ppo/
+exp7/results/ppo/logfile.txt
+exp7/results/trpo/
+exp7/results/trpo/cp.zip
+exp7/results/trpo/logfile.txt
+
+sent 362,449 bytes  received 681 bytes  66,023.64 bytes/sec
+total size is 2,033,063  speedup is 5.60
+Agent pid 211253
+sending incremental file list
+
+sent 122 bytes  received 12 bytes  268.00 bytes/sec
+total size is 35,900  speedup is 267.91

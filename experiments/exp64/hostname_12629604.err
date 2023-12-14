@@ -1,0 +1,14 @@
+/var/slurmd/spool/slurmd/job12629604/slurm_script: line 15: cd: /n/holyscratch01/ba_lab/Users/mjacobs/mit67900_final_project/experiments/exp64/: No such file or directory
+Identity added: /n/home01/mjacobs/.ssh/id_rsa2 (mozesjacobs@g.harvard.edu)
+Traceback (most recent call last):
+  File "/n/home01/mjacobs/mit67900_final_project/experiments/exp64/../train_fittedq.py", line 61, in <module>
+    main()
+  File "/n/home01/mjacobs/mit67900_final_project/experiments/exp64/../train_fittedq.py", line 28, in main
+    env = make_env(config)
+  File "/n/home01/mjacobs/mit67900_final_project/experiments/utils.py", line 8, in make_env
+    return gym.make(
+  File "/n/holyscratch01/ba_lab/Users/mjacobs/conda/envs/meow/lib/python3.10/site-packages/gymnasium/envs/registration.py", line 802, in make
+    env = env_creator(**env_spec_kwargs)
+  File "/n/holyscratch01/ba_lab/Users/mjacobs/conda/envs/meow/lib/python3.10/site-packages/gymnasium/envs/box2d/lunar_lander.py", line 248, in __init__
+    -12.0 < gravity and gravity < 0.0
+AssertionError: gravity (current value: -12.0) must be between -12 and 0

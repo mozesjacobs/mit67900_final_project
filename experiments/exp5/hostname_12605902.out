@@ -1,0 +1,18 @@
+sending incremental file list
+exp5/
+exp5/hostname_12605899.err
+exp5/hostname_12605899.out
+exp5/hostname_12605900.err
+exp5/hostname_12605900.out
+exp5/hostname_12605901.out
+exp5/hostname_12605902.err
+exp5/hostname_12605902.out
+
+sent 6,319 bytes  received 183 bytes  4,334.67 bytes/sec
+total size is 1,361,577  speedup is 209.41
+Agent pid 821823
+ 100% ━━━━━━━━━━━━━━━━━━━━ 1,000,000/1,000,000  [ 0:18:39 < 0:00:00 , 887 it/s ]
+sending incremental file list
+
+sent 99 bytes  received 12 bytes  222.00 bytes/sec
+total size is 104,663  speedup is 942.91

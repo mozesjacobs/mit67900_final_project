@@ -1,0 +1,14 @@
+sending incremental file list
+exp7/hostname_12611452.out
+exp7/hostname_12611453.err
+exp7/hostname_12611454.err
+exp7/hostname_12611455.err
+exp7/hostname_12611455.out
+
+sent 6,692 bytes  received 154 bytes  2,738.40 bytes/sec
+total size is 1,702,484  speedup is 248.68
+Agent pid 1303097
+sending incremental file list
+
+sent 143 bytes  received 12 bytes  310.00 bytes/sec
+total size is 52,286  speedup is 337.33

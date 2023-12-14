@@ -1,0 +1,20 @@
+sending incremental file list
+__pycache__/
+__pycache__/fittedq.cpython-310.pyc
+exp2/hostname_12609096.err
+exp2/hostname_12609096.out
+exp2/results/fittedq/
+exp2/results/fittedq/logfile.txt
+exp3/
+exp3/hostname_12609101.err
+exp3/hostname_12609101.out
+exp3/results/fittedq/
+exp5/results/fittedq/logfile.txt
+
+sent 11,175 bytes  received 198 bytes  7,582.00 bytes/sec
+total size is 1,466,809  speedup is 128.97
+Agent pid 1272624
+sending incremental file list
+
+sent 105 bytes  received 12 bytes  234.00 bytes/sec
+total size is 30,699  speedup is 262.38

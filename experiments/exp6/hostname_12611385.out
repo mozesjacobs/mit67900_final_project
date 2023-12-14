@@ -1,0 +1,39 @@
+sending incremental file list
+./
+exp6/
+exp6/config_ddqn.yaml
+exp6/config_fittedq.yaml
+exp6/config_ppo.yaml
+exp6/config_trpo.yaml
+exp6/hostname_12611381.err
+exp6/hostname_12611381.out
+exp6/hostname_12611382.err
+exp6/hostname_12611382.out
+exp6/hostname_12611384.err
+exp6/hostname_12611384.out
+exp6/hostname_12611385.err
+exp6/hostname_12611385.out
+exp6/submit_all.sh
+exp6/submit_ddqn.sh
+exp6/submit_fittedq.sh
+exp6/submit_ppo.sh
+exp6/submit_trpo.sh
+exp7/config_ddqn.yaml
+exp7/config_fittedq.yaml
+exp7/config_ppo.yaml
+exp7/config_trpo.yaml
+exp7/submit_all.sh
+exp7/submit_ddqn.sh
+exp7/submit_fittedq.sh
+exp7/submit_ppo.sh
+exp7/submit_trpo.sh
+exp7/results/
+
+sent 17,255 bytes  received 566 bytes  35,642.00 bytes/sec
+total size is 1,694,863  speedup is 95.10
+Agent pid 836040
+ 100% ━━━━━━━━━━━━━━━━━━━━ 1,000,000/1,000,000  [ 0:18:44 < 0:00:00 , 884 it/s ]
+sending incremental file list
+
+sent 99 bytes  received 12 bytes  222.00 bytes/sec
+total size is 104,633  speedup is 942.64

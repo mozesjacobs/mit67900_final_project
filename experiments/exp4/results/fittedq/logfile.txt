@@ -1,0 +1,30 @@
+Episode 100	Average Score: -250.04
+Episode 200	Average Score: -204.98
+Episode 300	Average Score: -236.52
+Episode 400	Average Score: -155.31
+Episode 500	Average Score: -153.58
+Episode 600	Average Score: -99.40
+Episode 700	Average Score: -49.54
+Episode 800	Average Score: -47.06
+Episode 900	Average Score: 24.29
+Episode 1000	Average Score: -28.90
+Episode 1100	Average Score: -134.23
+Episode 1200	Average Score: -22.12
+Episode 1300	Average Score: 28.28
+Episode 1400	Average Score: 115.60
+Episode 1500	Average Score: 107.49
+Episode 1600	Average Score: -0.46
+Episode 1700	Average Score: -50.75
+Episode 1800	Average Score: 18.95
+Episode 1900	Average Score: 73.69
+Episode 2000	Average Score: 10.73
+Episode 2100	Average Score: 82.20
+Episode 2200	Average Score: 105.58
+Episode 2300	Average Score: 75.70
+Episode 2400	Average Score: 116.17
+Episode 2500	Average Score: 114.66
+Episode 2600	Average Score: 67.73
+Episode 2700	Average Score: 107.57
+Episode 2800	Average Score: 78.17
+Episode 2900	Average Score: 140.51
+Total Timesteps: 1000000

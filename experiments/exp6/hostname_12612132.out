@@ -1,0 +1,32 @@
+sending incremental file list
+./
+__pycache__/
+__pycache__/trainer.cpython-310.pyc
+evals/
+evals/eval1.py
+exp2/hostname_12611908.err
+exp2/hostname_12611908.out
+exp2/results/fittedq/
+exp2/results/fittedq/cp_.pt
+exp2/results/fittedq/logfile.txt
+exp2/results/fittedq/score.npy
+exp6/
+exp6/config_fittedq.yaml
+exp6/hostname_12611384.out
+exp6/hostname_12612132.err
+exp6/hostname_12612132.out
+exp6/results/ppo/
+exp6/results/ppo/cp_.zip
+exp6/results/ppo/logfile.txt
+exp7/hostname_12611454.out
+exp7/results/ppo/
+exp7/results/ppo/cp_.zip
+exp7/results/ppo/logfile.txt
+
+sent 352,275 bytes  received 401 bytes  64,122.91 bytes/sec
+total size is 2,373,855  speedup is 6.73
+Agent pid 219412
+sending incremental file list
+
+sent 122 bytes  received 12 bytes  268.00 bytes/sec
+total size is 29,917  speedup is 223.26

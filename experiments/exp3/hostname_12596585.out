@@ -1,0 +1,16 @@
+sending incremental file list
+exp2/hostname_12596511.err
+exp2/hostname_12596511.out
+exp3/
+exp3/config_fittedq.yaml
+exp3/hostname_12596585.err
+exp3/hostname_12596585.out
+exp3/submit_fittedq.sh
+
+sent 5,652 bytes  received 152 bytes  2,321.60 bytes/sec
+total size is 1,063,603  speedup is 183.25
+Agent pid 1102063
+sending incremental file list
+
+sent 105 bytes  received 12 bytes  234.00 bytes/sec
+total size is 31,132  speedup is 266.09

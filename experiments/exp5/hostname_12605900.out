@@ -1,0 +1,26 @@
+sending incremental file list
+exp5/
+exp5/hostname_12605894.err
+exp5/hostname_12605894.out
+exp5/hostname_12605895.err
+exp5/hostname_12605895.out
+exp5/hostname_12605896.err
+exp5/hostname_12605896.out
+exp5/hostname_12605897.err
+exp5/hostname_12605897.out
+exp5/hostname_12605899.err
+exp5/hostname_12605899.out
+exp5/hostname_12605900.err
+exp5/hostname_12605900.out
+exp5/submit_ddqn.sh
+exp5/submit_fittedq.sh
+exp5/submit_ppo.sh
+exp5/submit_trpo.sh
+
+sent 14,661 bytes  received 354 bytes  3,336.67 bytes/sec
+total size is 1,359,936  speedup is 90.57
+Agent pid 179570
+sending incremental file list
+
+sent 105 bytes  received 12 bytes  234.00 bytes/sec
+total size is 26,767  speedup is 228.78

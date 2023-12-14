@@ -1,0 +1,26 @@
+seed: 1
+env: "LunarLander-v2"
+logfile: 'results/ppo/logfile.txt'
+scorefile: 'results/ppo/score.pkl'
+modelfile: 'results/ppo/cp_'
+policy: 'MlpPolicy'
+lr: 5.0e-4
+buffer_size: 1.0e+5
+batch_size: 64
+gamma: 0.99            
+tau: 1.0e-3             
+update_interval: 4 
+total_time: 1000000
+run_length: 1000
+window_length: 100
+eps_start: 1.0
+eps_end: 0.01
+eps_decay: 0.995
+clip_range: 0.2
+gae_lambda: 0.98
+net_arch: [64, 64]
+reward_threshold: 200
+gravity: -10.0
+enable_wind: True
+wind_power: 15.0
+turbulence_power: 1.5

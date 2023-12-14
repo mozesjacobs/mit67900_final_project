@@ -1,0 +1,17 @@
+Episode 100	Average Score: -213.06
+Episode 200	Average Score: -90.40
+Episode 300	Average Score: -150.69
+Episode 400	Average Score: -92.65
+Episode 500	Average Score: -40.63
+Episode 600	Average Score: 14.99
+Episode 700	Average Score: 61.07
+Episode 800	Average Score: 107.76
+Episode 900	Average Score: 99.94
+Episode 1000	Average Score: 75.31
+Episode 1100	Average Score: 8.98
+Episode 1200	Average Score: 136.27
+Episode 1300	Average Score: 185.55
+Episode 1400	Average Score: 186.61
+Episode 1500	Average Score: 174.74
+Episode 1600	Average Score: 191.00
+Total Timesteps: 1000000

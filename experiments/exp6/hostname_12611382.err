@@ -1,0 +1,18 @@
+/var/slurmd/spool/slurmd/job12611382/slurm_script: line 15: cd: /n/holyscratch01/ba_lab/Users/mjacobs/mit67900_final_project/experiments/exp6/: No such file or directory
+Identity added: /n/home01/mjacobs/.ssh/id_rsa2 (mozesjacobs@g.harvard.edu)
+Traceback (most recent call last):
+  File "/n/home01/mjacobs/mit67900_final_project/experiments/exp6/../train_fittedq.py", line 61, in <module>
+    main()
+  File "/n/home01/mjacobs/mit67900_final_project/experiments/exp6/../train_fittedq.py", line 34, in main
+    agent = load_agent(config, state_dim, action_dim, device)
+  File "/n/home01/mjacobs/mit67900_final_project/experiments/exp6/../train_fittedq.py", line 57, in load_agent
+    return agent.load(config['loadfile'])
+  File "/n/home01/mjacobs/mit67900_final_project/experiments/fittedq.py", line 118, in load
+    self.qnetwork.load_state_dict(torch.load(path + ".pt"))
+  File "/n/home01/mjacobs/.local/lib/python3.10/site-packages/torch/serialization.py", line 986, in load
+    with _open_file_like(f, 'rb') as opened_file:
+  File "/n/home01/mjacobs/.local/lib/python3.10/site-packages/torch/serialization.py", line 435, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "/n/home01/mjacobs/.local/lib/python3.10/site-packages/torch/serialization.py", line 416, in __init__
+    super().__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: '../exp2/results/fittedq/cp_.pt'

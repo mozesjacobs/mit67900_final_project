@@ -1,0 +1,8 @@
+Episode 100	Average Score: -223.60
+Episode 200	Average Score: -9.73
+Episode 300	Average Score: 8.00
+Episode 400	Average Score: 54.52
+Episode 500	Average Score: 186.17
+
+Environment solved in 386474 timesteps!	Average Score: 204.81
+Total Timesteps: 386474

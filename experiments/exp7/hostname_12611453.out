@@ -1,0 +1,32 @@
+sending incremental file list
+exp6/hostname_12611381.err
+exp6/hostname_12611381.out
+exp6/hostname_12611382.err
+exp6/hostname_12611382.out
+exp6/hostname_12611384.err
+exp6/hostname_12611384.out
+exp6/hostname_12611385.err
+exp6/hostname_12611385.out
+exp6/results/ddqn/logfile.txt
+exp6/results/ppo/logfile.txt
+exp6/results/trpo/logfile.txt
+exp7/hostname_12611452.err
+exp7/hostname_12611452.out
+exp7/hostname_12611453.err
+exp7/hostname_12611453.out
+exp7/hostname_12611454.err
+exp7/hostname_12611454.out
+exp7/hostname_12611455.err
+exp7/hostname_12611455.out
+exp7/submit_ddqn.sh
+exp7/submit_fittedq.sh
+exp7/submit_ppo.sh
+exp7/submit_trpo.sh
+
+sent 15,371 bytes  received 496 bytes  31,734.00 bytes/sec
+total size is 1,700,257  speedup is 107.16
+Agent pid 836330
+sending incremental file list
+
+sent 122 bytes  received 12 bytes  268.00 bytes/sec
+total size is 33,657  speedup is 251.17

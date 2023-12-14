@@ -1,0 +1,6 @@
+/var/slurmd/spool/slurmd/job12611453/slurm_script: line 15: cd: /n/holyscratch01/ba_lab/Users/mjacobs/mit67900_final_project/experiments/exp7/: No such file or directory
+Identity added: /n/home01/mjacobs/.ssh/id_rsa2 (mozesjacobs@g.harvard.edu)
+/n/home01/mjacobs/.local/lib/python3.10/site-packages/numpy/core/fromnumeric.py:3504: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+/n/home01/mjacobs/.local/lib/python3.10/site-packages/numpy/core/_methods.py:129: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
