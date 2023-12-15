@@ -1,10 +1,9 @@
 import torch
 
-from algorithms.ppo import episode, Agent
-from trainer import train_ppo as train
+from stable_baselines3 import PPO
 from gymnasium.envs.registration import register
 from custom_env import *
-from utils import compute_average_reward
+from utils import compute_average_reward, CustomCallback
 
 # Code adapted from:
 # https://goodboychan.github.io/python/reinforcement_learning/pytorch/udacity/2021/05/07/DQN-LunarLander.html
@@ -23,40 +22,47 @@ def main():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     # Make environment
-    env = gym.make('CustomEnv')
+    env = gym.make('CustomEnv', board_kwargs={'Enemy_number':8})
     print('State shape: ', env.observation_space.shape)
     print('Number of actions: ', env.action_space.n)
     state_dim = np.prod(env.observation_space.shape)
     action_dim = env.action_space.n
 
     # Parameters
-    lr = 1e-3
-    gamma = 0.99
-    hidden_dim = 64
-    max_episodes = 2000
-    max_t = 500
-    epsilon = 0.2
-    beta = 1.0
-    delta = 0.01
-    c1 = 0.5
-    c2 = 0.01
-    k_epoch = 40
-    batch_size = 1600
+    lr = 0.001
+    gamma = 0.9
+    n_steps = 2048
+    total_timesteps = 200000
+    gae_lambda = 0.95
+    batch_size = 128
+    policy_kwargs = {'net_arch': [30]}
 
     # Build agent
-    agent = Agent(gamma, epsilon, beta, delta, c1, c2, k_epoch, 
-                  state_dim, action_dim, lr, lr, hidden_dim, batch_size)
+    model = PPO(
+        "MlpPolicy",
+        env,
+        learning_rate=lr,
+        gamma=gamma,
+        n_steps=n_steps,
+        gae_lambda=gae_lambda,
+        batch_size=batch_size,
+        policy_kwargs=policy_kwargs
+    )
 
-    avg_r = compute_average_reward(agent, env)
+    avg_r = compute_average_reward(model, env)
     print(f'Average reward, avg. number of positive rewards before training: {avg_r}')
-
+    callback = CustomCallback(model)
     # Train
-    scores = train(agent, env, episode, 'ppo', max_episodes, max_t)
+    model.learn(total_timesteps=total_timesteps, callback=callback, progress_bar=True)
 
-    avg_r = compute_average_reward(agent, env)
+    callback_info = callback.get_info()
+    rewards = callback_info['episode_rewards']
+    pos_rewards = callback_info['positive_rewards_count']
+
+    avg_r = compute_average_reward(model, env)
     print(f'Average reward, avg. number of positive rewards after training: {avg_r}')
 
-    return agent
+    return model, rewards, pos_rewards
 
 if __name__ == "__main__":
     main()

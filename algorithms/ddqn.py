@@ -16,7 +16,7 @@ from collections import deque, namedtuple
 class Agent():
     """Interacts with and learns from the environment."""
 
-    def __init__(self, state_size, action_size, seed, buffer_size, batch_size, update_interval, gamma, device, lr, tau):
+    def __init__(self, state_size, action_size, seed, buffer_size, batch_size, update_interval, gamma, device, lr, tau, hidden_size=64):
         """Initialize an Agent object.
         
         Params
@@ -34,8 +34,8 @@ class Agent():
         self.tau = tau
 
         # Q-Network
-        self.qnetwork_local = QNetwork(state_size, action_size, seed).to(device)
-        self.qnetwork_target = QNetwork(state_size, action_size, seed).to(device)
+        self.qnetwork_local = QNetwork(state_size, action_size, seed, hidden_size=hidden_size).to(device)
+        self.qnetwork_target = QNetwork(state_size, action_size, seed, hidden_size=hidden_size).to(device)
         self.optimizer = optim.Adam(self.qnetwork_local.parameters(), lr=lr)
 
         # Replay memory
@@ -132,7 +132,7 @@ class Agent():
 class QNetwork(nn.Module):
     """Actor (Policy) Model."""
 
-    def __init__(self, state_size, action_size, seed):
+    def __init__(self, state_size, action_size, seed, hidden_size=64):
         """Initialize parameters and build model.
         Params
         ======
@@ -142,9 +142,9 @@ class QNetwork(nn.Module):
         """
         super(QNetwork, self).__init__()
         self.seed = torch.manual_seed(seed)
-        self.fc1 = nn.Linear(state_size, 64)
-        self.fc2 = nn.Linear(64, 64)
-        self.fc3 = nn.Linear(64, action_size)
+        self.fc1 = nn.Linear(state_size, hidden_size)
+        self.fc2 = nn.Linear(hidden_size, hidden_size)
+        self.fc3 = nn.Linear(hidden_size, action_size)
         self.relu = nn.ReLU()
         
     def forward(self, state):

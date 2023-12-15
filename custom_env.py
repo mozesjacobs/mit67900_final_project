@@ -3,36 +3,40 @@ import math
 import gymnasium as gym
 from gymnasium import spaces
 import numpy as np
-#from tensorflow import keras
-#from tensorflow.keras import layers
-#from tensorflow import GradientTape, expand_dims
+from tensorflow import keras
+from tensorflow.keras import layers
+from tensorflow import GradientTape, expand_dims
 from tqdm import tqdm
 
 class EnvironmentWrapper(gym.Env):
-    def __init__(self):
+    def __init__(self, board_kwargs=None):
         super(EnvironmentWrapper, self).__init__()
         # Define the observation space as a binary array with 145 elements
         self.observation_space = spaces.MultiBinary(145)
 
         # Define the action space as discrete actions {0, 1, 2, 3}
         self.action_space = spaces.Discrete(4)  # 4 actions: 0, 1, 2, 3
+        if board_kwargs == None:
+            board_kwargs = {}
+        self.board = game(**board_kwargs)
 
-        self.board = game()
+        self.board_kwargs = board_kwargs
 
     def reset(self, seed = None):
         # Reset the environment and return the initial observation
-        self.board.restart()
-        self.board.move_enemies()
+        self.board.restart(**self.board_kwargs)
         obs = np.array(self.board.get_data(), dtype=np.int8)
         return obs, {}
 
     def step(self, action):
+        self.board.move_enemies()
         r = self.board.move_agent(action)
         observation = np.array(self.board.get_data(), dtype=np.int8)
         done = not(self.board.is_alive())
+        trunc = self.board.Food_number == 0
         info = {}  # Additional information (optional)
 
-        return observation, r, done, done, info
+        return observation, r, done, trunc, info
 
 
 test = False
@@ -101,9 +105,19 @@ class game:
                       (11, 17), (12, 3), (12, 4), (12, 9), (12, 17), (12, 22), (12, 23), (13, 3), (13, 13), (13, 23)]:
                 self.board[i[0]][i[1]].state = 'O'
                 self.board[26 - i[0]][i[1]].state = 'O'
-            for i in [(2, 13), (7, 7), (7, 13), (7, 19)]:
-                self.board[i[0]][i[1]].state = 'E'
-                self.enemies.append(self.board[i[0]][i[1]])
+            if self.Enemy_number == 4:
+                for i in [(2, 13), (7, 7), (7, 13), (7, 19)]:
+                    self.board[i[0]][i[1]].state = 'E'
+                    self.enemies.append(self.board[i[0]][i[1]])
+            elif self.Enemy_number == 6:
+                for i in [(2, 7), (2, 13), (2,19), (7, 7), (7, 13), (7, 19)]:
+                    self.board[i[0]][i[1]].state = 'E'
+                    self.enemies.append(self.board[i[0]][i[1]])
+            elif self.Enemy_number == 8:
+                for i in [(2, 7), (2, 13), (2,19), (7, 7), (7, 13), (7, 19), (12, 7), (12, 19)]:
+                    self.board[i[0]][i[1]].state = 'E'
+                    self.enemies.append(self.board[i[0]][i[1]])
+
         else:
             '''
             Will follow. This allows for non-standard board design.
@@ -500,7 +514,7 @@ class game:
 
 
 class Q_Agent:
-    def __init__(self, discount_factor=0.9, temperature=0.01, H=30, eta=0.001, board=game(), n=None):
+    def __init__(self, discount_factor=0.9, temperature=0.01, H=30, eta=0.001, n=None, board_kwargs=None):
         '''
         An TD learning Agent is initialized with
         discount factor - for TD learning
@@ -510,6 +524,9 @@ class Q_Agent:
         board - a game is passed on
         eval_n, policy_n - load saved models
         '''
+        if board_kwargs == None:
+            board_kwargs = {}
+        self.board_kwargs = board_kwargs
         self.discount_factor = discount_factor
         self.temperature = temperature
         self.eta = eta
@@ -523,13 +540,13 @@ class Q_Agent:
         else:
             self.net = keras.models.load_model(n)
 
-        # 0 gives Nourth, 1 E, 2 S, 3 W
+        # 0 gives North, 1 E, 2 S, 3 W
 
         self.optimizer = keras.optimizers.Adam(learning_rate=self.eta)
 
         self.loss_function = keras.losses.Huber()
 
-        self.board = board
+        self.board = game(**board_kwargs)
 
     def sigmoid(self, x):
         '''
@@ -548,7 +565,13 @@ class Q_Agent:
             prob.append(x[0, 0])
         if show_prob:
             print(prob)
-        chosen_dir = random.choices([0, 1, 2, 3], weights=prob)[0]
+        arr = np.array(prob)
+        if np.sum(arr) < np.inf:
+            chosen_dir = random.choices([0, 1, 2, 3], weights=prob)[0]
+        else:
+            max_entry = np.max(arr)
+            indices = np.where(arr==max_entry)[0]
+            chosen_dir = np.random.choice(indices)
         if comp_max:
             return (prob.index(max(prob)), self.board.get_data(prob.index(max(prob))))
         return (chosen_dir, self.board.get_data(chosen_dir))
@@ -598,7 +621,7 @@ class Q_Agent:
             real_reinforcement_list.append(real_reinforcement)
             food_found.append(self.board.food_found)
 
-            self.board.restart()
+            self.board.restart(**self.board_kwargs)
 
         return (real_reinforcement_list, food_found)
 
@@ -646,7 +669,7 @@ class Q_Agent:
 
         return found_list
 
-    def get_avg_r(self, rounds = 10):
+    def get_avg_r(self, rounds = 50):
         '''
         runs agent with temperature 0.01 and returns average reward and food collected
         '''
@@ -668,302 +691,13 @@ class Q_Agent:
                 reward += r
             total_reward += reward
             total_food += food
-            self.board.restart()
+            self.board.restart(**self.board_kwargs)
         total_reward /= rounds
         total_food /= rounds
 
         return total_reward, total_food
 
-    def run(self):
-        '''
-        runs agent with temperature 0.01 and returns a visual
-        '''
-        vis = []
-        self.temperature = 0.01
-        while (self.board.is_alive()):
-            self.board.move_enemies()
-            # self.board.visual.append(self.board.vis())
-            x = self.board.get_data()
-            e = self.net(expand_dims(x, 0))
-
-            direction, _ = self.select_action(comp_max=True)
-            r = self.board.move_agent(direction=direction)
-
-            vis.append(self.board.vis())
-
-        self.board.restart()
-        return vis
-
-    def choose_experience(self, m):  # Appendix B from the paper.
-        w = min(3, 1 + 0.02 * m)
-        rand = random.random()
-        return int(m * math.log(1 + rand * (math.e ** w - 1)) / w)
-
-    def teaching_prob(self, round):
-        return (2 / 5 * math.e ** (-round / 100) + 1 / 10)
-
-    def replay_number(self, round):
-        if round < 14:
-            return 12
-        if round < 26:
-            return 11
-        if round < 38:
-            return 10
-        if round < 51:
-            return 9
-        if round < 76:
-            return 8
-        if round < 101:
-            return 7
-        if round < 151:
-            return 6
-        if round < 201:
-            return 5
-        return 4
-
-    def train_teaching_on_policy(self, rounds=10, temperature_l=None, teaching=True, prio=False, pl=0.01):
-        '''
-        only replays actions that are on policy, i.e. probability of >=pl
-        if PER is performed, this doesn't make a difference, i.e. with PER there is no differentiation between policy/non policy actions
-        train agents with
-        rounds - amount of training rounds
-        analyse - save analyse data
-        temperature_l - list of temeratures of length rounds, if None temperature is set to 0.01
-        incorporates experience replay from the most recont 100 actions and teaching
-        experiences are always saved as [old state (not turned),direction,reinforcement,new state (not turned)] (+[td error] potentially)
-        If teaching=False, then only experience replay will be performed.
-        If prio=True, then prioritized exp. replay will be performed instead of regular exp. replay.
-        '''
-        recent_exp = []
-
-        real_reinforcement_list = np.zeros([rounds])
-        lifetime = np.zeros([rounds])
-        food_found = np.zeros([rounds])
-        energy = np.zeros([rounds])
-        for i in range(rounds):
-            real_reinforcement = 0
-            if temperature_l is None:
-                # self.temperature= max(min(10/(i+1),0.3),0.01)
-                self.temperature = 0.01
-            else:
-                self.temperature = temperature_l[i]
-
-            # play moves until agent dies
-            while (self.board.is_alive()):
-                self.board.move_enemies()
-                x = self.board.get_data()
-                direction, turned_x = self.select_action()
-
-                r = self.board.move_agent(direction=direction)
-
-                real_reinforcement = r + self.discount_factor * real_reinforcement
-
-                loss_funktion = self.loss_funktion
-
-                l = []
-                for j in range(4):
-                    l.append(self.net(expand_dims(self.board.get_data(j), 0))[0][0])
-
-                u_prime = np.array([[r]]) + self.discount_factor * max(l)
-
-                # Backprop net
-                with GradientTape() as tape:
-                    old_u = self.net(expand_dims(turned_x, 0))
-                    loss_value = loss_funktion(u_prime, old_u)
-
-                # Update the weights of net to minimize the loss value.
-                gradients = tape.gradient(loss_value, self.net.trainable_weights)
-                self.optimizer.apply_gradients(zip(gradients, self.net.trainable_weights))
-
-                recent_exp.append([x, direction, r, self.board.get_data(), abs(loss_value)])
-                if len(recent_exp) > 100:
-                    recent_exp = recent_exp[1:]
-
-            real_reinforcement_list[i] = real_reinforcement
-            lifetime[i] = self.board.time
-            food_found[i] = self.board.food_found
-            energy[i] = self.board.energy
-
-            if not prio:
-
-                for h in range(self.replay_number(
-                        self.rounds_trained)):  # replays past experiences. replays only policy actions.
-                    all_off_policy = False
-                    not_allowed = []
-                    done = False
-                    while not done:
-                        k = self.choose_experience(len(recent_exp) - len(not_allowed))
-                        exp = recent_exp[
-                            k + len([x for x in not_allowed if x <= k + len([y for y in not_allowed if y <= x])])]
-                        prob = []
-                        for i in range(4):
-                            x = np.exp(
-                                self.net(expand_dims(self.board.turn_input_even_more(exp[0], i), 0)) / self.temperature)
-                            prob.append(x[0, 0])
-                        if prob[exp[1]] / sum(prob) >= pl:
-                            self.train_experience(exp)
-                            done = True
-                        else:
-                            not_allowed.append(
-                                k + len([x for x in not_allowed if x <= k + len([y for y in not_allowed if y <= x])]))
-                            if len(not_allowed) == len(recent_exp):
-                                done = True
-                                print("No policy actions left")
-                                all_off_policy = True
-                    if all_off_policy == True:
-                        break
-
-            if prio:
-
-                probs = [(recent_exp[t][-1] + 0.001) ** 0.7 for t in range(len(recent_exp))]
-                w_list = [(len(recent_exp) * probs[t] / sum(probs)) ** (-0.5 - 0.5 * self.rounds_trained / rounds) for t
-                          in range(len(recent_exp))]  # contains the weights w_i; missing '/max w_i'
-                for h in range(self.replay_number(self.rounds_trained)):
-                    exp = random.choices(recent_exp, weights=probs)[0]
-                    t = recent_exp.index(exp)
-                    new_delta = self.train_experience(exp, w_list[t] / max(w_list))
-                    recent_exp[t][-1] = new_delta
-                    probs[t] = (recent_exp[t][-1] + 0.001) ** 0.7
-                    w_list[t] = (len(recent_exp) * probs[t] / sum(probs)) ** (-0.5 - 0.5 * self.rounds_trained / rounds)
-
-            if teaching:
-
-                prob = self.teaching_prob(self.rounds_trained)
-                lists = [l1, l2, l3, l4, l5, l6, l7]
-                l = random.choice(lists)
-                for exp in l:
-                    if prob >= random.random():
-                        self.train_experience(exp)
-
-            self.rounds_trained += 1
-            self.board.restart()
-
-        return (real_reinforcement_list, lifetime, food_found, energy)
-
-    def train_teaching(self, rounds=10, temperature_l=None, teaching=True, prio=False):
-        '''
-        train agents with
-        rounds - amount of training rounds
-        analyse - save analyse data
-        temperature_l - list of temeratures of length rounds, if None temperature is set to 0.01
-        incorporates experience replay from the most recont 100 actions and teaching
-        experiences are always saved as [old state (not turned),direction,reinforcement,new state (not turned)] (+[td error] potentially)
-        If teaching=False, then only experience replay will be performed.
-        If prio=True, then prioritized exp. replay will be performed instead of regular exp. replay.
-        '''
-        recent_exp = []
-
-        real_reinforcement_list = np.zeros([rounds])
-        lifetime = np.zeros([rounds])
-        food_found = np.zeros([rounds])
-        energy = np.zeros([rounds])
-        for i in range(rounds):
-            real_reinforcement = 0
-            if temperature_l is None:
-                # self.temperature= max(min(10/(i+1),0.3),0.01)
-                self.temperature = 0.01
-            else:
-                self.temperature = temperature_l[i]
-
-            # play moves until agent dies
-            while (self.board.is_alive()):
-                self.board.move_enemies()
-                x = self.board.get_data()
-                direction, turned_x = self.select_action()
-
-                r = self.board.move_agent(direction=direction)
-
-                real_reinforcement = r + self.discount_factor * real_reinforcement
-
-                loss_funktion = self.loss_funktion
-
-                l = []
-                for j in range(4):
-                    l.append(self.net(expand_dims(self.board.get_data(j), 0))[0][0])
-
-                u_prime = np.array([[r]]) + self.discount_factor * max(l)
-
-                # Backprop net
-                with GradientTape() as tape:
-                    old_u = self.net(expand_dims(turned_x, 0))
-                    loss_value = loss_funktion(u_prime, old_u)
-
-                # Update the weights of net to minimize the loss value.
-                gradients = tape.gradient(loss_value, self.net.trainable_weights)
-                self.optimizer.apply_gradients(zip(gradients, self.net.trainable_weights))
-
-                recent_exp.append([x, direction, r, self.board.get_data(), abs(loss_value)])
-                if len(recent_exp) > 100:
-                    recent_exp = recent_exp[1:]
-
-            real_reinforcement_list[i] = real_reinforcement
-            lifetime[i] = self.board.time
-            food_found[i] = self.board.food_found
-            energy[i] = self.board.energy
-
-            if not prio:
-
-                for h in range(self.replay_number(self.rounds_trained)):  # replays past experiences
-                    k = self.choose_experience(len(recent_exp))
-                    self.train_experience(recent_exp[k])
-
-            if prio:
-
-                probs = [(recent_exp[t][-1] + 0.001) ** 0.7 for t in range(len(recent_exp))]
-                w_list = [(len(recent_exp) * probs[t] / sum(probs)) ** (-0.5 - 0.5 * self.rounds_trained / rounds) for t
-                          in range(len(recent_exp))]  # contains the weights w_i; missing '/max w_i'
-                for h in range(self.replay_number(self.rounds_trained)):
-                    exp = random.choices(recent_exp, weights=probs)[0]
-                    t = recent_exp.index(exp)
-                    new_delta = self.train_experience(exp, w_list[t] / max(w_list))
-                    recent_exp[t][-1] = new_delta
-                    probs[t] = (recent_exp[t][-1] + 0.001) ** 0.7
-                    w_list[t] = (len(recent_exp) * probs[t] / sum(probs)) ** (-0.5 - 0.5 * self.rounds_trained / rounds)
-
-            if teaching:
-
-                prob = self.teaching_prob(self.rounds_trained)
-                lists = [l1, l2, l3, l4, l5, l6, l7]
-                l = random.choice(lists)
-                for exp in l:
-                    if prob >= random.random():
-                        self.train_experience(exp)
-
-            self.rounds_trained += 1
-            self.board.restart()
-
-        return (real_reinforcement_list, lifetime, food_found, energy)
-
-    def train_experience(self, experience, weight=1):
-        '''
-        train agent on one experience [old state,direction,reinforcement,new state]
-        '''
-
-        x = experience[0]
-        direction, turned_x = experience[1], self.board.turn_input_even_more(x, experience[1])
-
-        r = experience[2]
-
-        loss_funktion = self.loss_funktion
-
-        l = []
-        for j in range(4):
-            l.append(self.net(expand_dims(self.board.turn_input_even_more(experience[3], j), 0))[0][0])
-
-        u_prime = np.array([[r]]) + self.discount_factor * max(l)
-
-        # Backprop net
-        with GradientTape() as tape:
-            old_u = self.net(expand_dims(turned_x, 0))
-            loss_value = loss_funktion(u_prime, old_u) * weight
-
-        # Update the weights of net to minimize the loss value.
-        gradients = tape.gradient(loss_value, self.net.trainable_weights)
-        self.optimizer.apply_gradients(zip(gradients, self.net.trainable_weights))
-
-        return (abs(loss_value))
-
-    def run_no_vis(self, temperature=0.01, visual=False):
+    def run_vis(self, board_kwargs=None):
         '''
         runs agent
         Output:
@@ -973,39 +707,17 @@ class Q_Agent:
         energy left at the end
         visual
         '''
-        self.temperature = temperature
-        real_reinforcement = 0
+        if board_kwargs == None:
+            board_kwargs = {}
+        self.board = game(**board_kwargs)
         vis = []
-        while (self.board.is_alive()):
-            self.board.move_enemies()
 
-            x = self.board.get_data()
-            e = self.net(expand_dims(x, 0))
+        while self.board.is_alive():
+            self.board.move_enemies()
 
             direction, _ = self.select_action(comp_max=True)
             r = self.board.move_agent(direction=direction)
-            real_reinforcement = r + self.discount_factor * real_reinforcement
-            if visual:
-                vis.append(self.board.vis())
+            vis.append(self.board.vis())
 
-        stats = (real_reinforcement, self.board.time, self.board.food_found, self.board.energy, vis)
-        self.board.restart()
-        return stats
+        return vis
 
-
-def multiple_agents_comp(n=10, rounds=300, teaching=False, prio=False, onpolicy=True, pl=0.01):
-    l = []
-    for i in tqdm(range(n)):
-        a = Q_Agent()
-        found_list = a.get_plot_data_teaching(rounds=rounds, teaching=teaching, prio=prio, onpolicy=onpolicy, pl=pl)
-        l.append(found_list)
-        print(found_list)
-    minmaxlist = []
-    avglist = []
-    for i in range(len(l[0])):
-        minvalue = min([l[j][i] for j in range(len(l))])
-        maxvalue = max([l[j][i] for j in range(len(l))])
-        minmaxlist.append([minvalue, maxvalue])
-        avglist.append(sum([l[j][i] for j in range(len(l))]) / len(l))
-
-    return (minmaxlist, avglist, l)
