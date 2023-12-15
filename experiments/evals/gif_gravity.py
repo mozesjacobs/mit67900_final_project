@@ -114,7 +114,8 @@ for exp in EXPS:
     configs.append(curr_configs)
 
 # Setup (choose seed randomly)
-set_seed(4335)
+#set_seed(4335)
+set_seed(12)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # Results
@@ -122,19 +123,21 @@ results = []
 for i in range(len(configs)):
 #for i in range(3, len(configs)):
     print(i)
-    exp = configs[i]
-    for j in range(len(exp)):
-        print(j)
-        config = exp[j]
-        # Make environment
-        env = make_env(config)
-        state_dim = np.prod(env.observation_space.shape)
-        action_dim = env.action_space.n
-        agent = load_agent(config, env, EXPS[i], state_dim, action_dim, device)
-        frames = run_episode(env, model=agent)  # Replace with your actual model
-        fname = "results/gifs/gravity_" + str(i) + "_" + str(j) + ".gif"
-        create_gif(frames, filename=fname, fps=30)
-        env.close()
+    if i == 1:
+        exp = configs[i]
+        for j in range(len(exp)):
+            print(j)
+            if j == 1:
+                config = exp[j]
+                # Make environment
+                env = make_env(config)
+                state_dim = np.prod(env.observation_space.shape)
+                action_dim = env.action_space.n
+                agent = load_agent(config, env, EXPS[i], state_dim, action_dim, device)
+                frames = run_episode(env, model=agent)  # Replace with your actual model
+                fname = "results/gifs/gravity_" + str(i) + "_" + str(j) + ".gif"
+                create_gif(frames, filename=fname, fps=30)
+                env.close()
 
 # Run episodes and capture frames
 #all_frames = []

@@ -1,3 +1,0 @@
-/var/slurmd/spool/slurmd/job12768087/slurm_script: line 15: cd: /n/holyscratch01/ba_lab/Users/mjacobs/mit67900_final_project/experiments/evals/: No such file or directory
-Identity added: /n/home01/mjacobs/.ssh/id_rsa2 (mozesjacobs@g.harvard.edu)
-slurmstepd: error: *** JOB 12768087 ON holygpu8a19302 CANCELLED AT 2023-12-15T12:23:56 ***
