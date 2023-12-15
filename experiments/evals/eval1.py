@@ -60,7 +60,7 @@ def main():
             agent = load_agent(config, env, EXPS[i], state_dim, action_dim, device)
             avg_reward = compute_average_reward(agent, env, num_runs=config['window_length'], nb_pos_r=False)
             results.append(avg_reward)
-    results = np.save("eval1.npy", np.array(results))
+    results = np.save("results/eval1.npy", np.array(results))
 
 
 def set_seed(seed):

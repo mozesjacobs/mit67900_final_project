@@ -1,0 +1,3 @@
+Episode 100	Average Score: 7.58
+Episode 200	Average Score: -22.95
+Total Timesteps: 100000

@@ -13,7 +13,7 @@ update_interval: 4
 total_time: 100000
 run_length: 1000
 window_length: 100
-eps_start: 1.0
+eps_start: 0.05
 eps_end: 0.01
 eps_decay: 0.995
 reward_threshold: 200

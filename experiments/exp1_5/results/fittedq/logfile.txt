@@ -1,0 +1,2 @@
+Episode 100	Average Score: 88.66
+Total Timesteps: 100000

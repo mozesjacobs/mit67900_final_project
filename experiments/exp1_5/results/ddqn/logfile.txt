@@ -1,0 +1,5 @@
+Episode 100	Average Score: 112.06
+Episode 200	Average Score: 196.62
+
+Environment solved in 65265 timesteps!	Average Score: 225.99
+Total Timesteps: 65265

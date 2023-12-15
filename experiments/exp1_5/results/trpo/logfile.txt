@@ -1,0 +1,2 @@
+Average reward before training: (73.5387365686965, 135.36)
+Average reward after training: (174.63564800272704, 170.6)

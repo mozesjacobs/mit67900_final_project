@@ -1,0 +1,26 @@
+sending incremental file list
+exp1_10/
+exp1_10/hostname_12682220.err
+exp1_10/hostname_12682220.out
+exp1_10/hostname_12682221.err
+exp1_10/hostname_12682221.out
+exp1_10/hostname_12682222.err
+exp1_10/hostname_12682222.out
+exp1_10/hostname_12682223.err
+exp1_10/hostname_12682223.out
+exp1_5/hostname_12682203.err
+exp1_5/hostname_12682203.out
+exp1_5/hostname_12682204.err
+exp1_5/hostname_12682204.out
+exp1_5/hostname_12682205.err
+exp1_5/hostname_12682205.out
+exp1_5/hostname_12682206.err
+exp1_5/hostname_12682206.out
+
+sent 25,192 bytes  received 422 bytes  17,076.00 bytes/sec
+total size is 5,452,785  speedup is 212.88
+Agent pid 1749157
+sending incremental file list
+
+sent 152 bytes  received 12 bytes  328.00 bytes/sec
+total size is 46,678  speedup is 284.62

@@ -1,0 +1,76 @@
+sending incremental file list
+exp1_10/results/trpo/
+exp1_10/results/trpo/cp.zip
+exp1_10/results/trpo/logfile.txt
+exp1_15/
+exp1_15/config_ddqn.yaml
+exp1_15/config_fittedq.yaml
+exp1_15/config_ppo.yaml
+exp1_15/config_trpo.yaml
+exp1_15/submit_all.sh
+exp1_15/submit_ddqn.sh
+exp1_15/submit_fittedq.sh
+exp1_15/submit_ppo.sh
+exp1_15/submit_trpo.sh
+exp1_15/results/
+exp1_15/results/ddqn/cp_local.pt
+exp1_15/results/ddqn/cp_target.pt
+exp1_15/results/ddqn/logfile.txt
+exp1_15/results/ddqn/score.npy
+exp1_15/results/fittedq/cp_.pt
+exp1_15/results/fittedq/logfile.txt
+exp1_15/results/fittedq/score.npy
+exp1_15/results/ppo/cp_.zip
+exp1_15/results/ppo/logfile.txt
+exp1_15/results/trpo/cp.zip
+exp1_15/results/trpo/logfile.txt
+exp1_5/
+exp1_5/config_ddqn.yaml
+exp1_5/config_fittedq.yaml
+exp1_5/config_ppo.yaml
+exp1_5/config_trpo.yaml
+exp1_5/hostname_12682203.err
+exp1_5/hostname_12682203.out
+exp1_5/hostname_12682204.err
+exp1_5/hostname_12682204.out
+exp1_5/hostname_12682205.err
+exp1_5/hostname_12682205.out
+exp1_5/hostname_12682206.err
+exp1_5/hostname_12682206.out
+exp1_5/submit_all.sh
+exp1_5/submit_ddqn.sh
+exp1_5/submit_fittedq.sh
+exp1_5/submit_ppo.sh
+exp1_5/submit_trpo.sh
+exp1_5/results/
+exp1_5/results/ddqn/cp_local.pt
+exp1_5/results/ddqn/cp_target.pt
+exp1_5/results/ddqn/logfile.txt
+exp1_5/results/ddqn/score.npy
+exp1_5/results/fittedq/cp_.pt
+exp1_5/results/fittedq/logfile.txt
+exp1_5/results/fittedq/score.npy
+exp1_5/results/ppo/cp_.zip
+exp1_5/results/ppo/logfile.txt
+exp1_5/results/trpo/cp.zip
+exp1_5/results/trpo/logfile.txt
+exp62/results/ddqn/cp_local.pt
+exp62/results/ddqn/cp_target.pt
+exp62/results/ddqn/logfile.txt
+exp62/results/ddqn/score.npy
+exp63/results/ddqn/cp_local.pt
+exp63/results/ddqn/cp_target.pt
+exp63/results/ddqn/logfile.txt
+exp63/results/ddqn/score.npy
+exp64/results/ddqn/cp_local.pt
+exp64/results/ddqn/cp_target.pt
+exp64/results/ddqn/logfile.txt
+exp64/results/ddqn/score.npy
+
+sent 928,683 bytes  received 1,352 bytes  372,014.00 bytes/sec
+total size is 5,442,065  speedup is 5.85
+Agent pid 1672486
+sending incremental file list
+
+sent 125 bytes  received 12 bytes  274.00 bytes/sec
+total size is 23,826  speedup is 173.91
