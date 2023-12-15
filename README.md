@@ -6,3 +6,5 @@ The code for the custom environment is in `custom_env.py`.
 The files for training the algorithms are named `train_{algorithm}.py`.
 
 `visualization_normal.gif` is a GIF showing our fully trained QCON agent in the normal environment, `visualization_food.gif` in the setting with 10 food and 10 starting energy, and `visualization_enemies.gif` in the setting with 8 enemies.
+
+The branches to look at for the project are: main, lunar1, and gifs.
