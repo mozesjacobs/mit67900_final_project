@@ -1,3 +1,6 @@
+# Code from:
+# https://goodboychan.github.io/python/reinforcement_learning/pytorch/udacity/2021/05/07/DQN-LunarLander.html
+
 from gymnasium.wrappers.monitoring import video_recorder
 import numpy as np
 import matplotlib.pyplot as plt
