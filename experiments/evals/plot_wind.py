@@ -36,19 +36,15 @@ index = np.arange(len(wind))
 fig, ax = plt.subplots(figsize=(10, 10))
 
 bar1 = ax.bar(index - 1.5 * bar_width, [item[0] for item in ddqn_values], bar_width, label='DDQN Before', color='b')
-#bar2 = ax.bar(index - 1.5 * bar_width, [item[1] for item in ddqn_values], bar_width, bottom=[item[0] for item in ddqn_values], label='DDQN After', color='g')
 bar2 = ax.bar(index - 1.5 * bar_width, [item[1] for item in ddqn_values], bar_width, label='DDQN After', color='g')
 
 bar3 = ax.bar(index - 0.5 * bar_width, [item[0] for item in fittedq_values], bar_width, label='FittedQ Before', color='c')
-#bar4 = ax.bar(index - 0.5 * bar_width, [item[1] for item in fittedq_values], bar_width, bottom=[item[0] for item in fittedq_values], label='FittedQ After', color='m')
 bar4 = ax.bar(index - 0.5 * bar_width, [item[1] for item in fittedq_values], bar_width, label='FittedQ After', color='m')
 
 bar5 = ax.bar(index + 0.5 * bar_width, [item[0] for item in trpo_values], bar_width, label='TRPO Before', color='y')
-#bar6 = ax.bar(index + 0.5 * bar_width, [item[1] for item in trpo_values], bar_width, bottom=[item[0] for item in trpo_values], label='TRPO After', color='r')
 bar6 = ax.bar(index + 0.5 * bar_width, [item[1] for item in trpo_values], bar_width, label='TRPO After', color='r')
 
 bar7 = ax.bar(index + 1.5 * bar_width, [item[0] for item in ppo_values], bar_width, label='PPO Before', color='orange')
-#bar8 = ax.bar(index + 1.5 * bar_width, [item[1] for item in ppo_values], bar_width, bottom=[item[0] for item in ppo_values], label='PPO After', color='purple')
 bar8 = ax.bar(index + 1.5 * bar_width, [item[1] for item in ppo_values], bar_width, label='PPO After', color='purple')
 
 # Add labels, title, and legend

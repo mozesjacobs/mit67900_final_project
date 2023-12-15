@@ -20,8 +20,8 @@ source ~/.bashrc
 mamba activate meow
 
 # RUN EXPERIMENT
-python gif_gravity.py
-python gif_wind.py
+python gif_gravity_before.py
+python gif_wind_before.py
 
 # DEACTIVATE ENVIRONMENT
 mamba deactivate
