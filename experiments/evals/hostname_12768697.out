@@ -1,0 +1,18 @@
+sending incremental file list
+evals/
+evals/gif_gravity.py
+evals/hostname_12768603.err
+evals/hostname_12768603.out
+evals/hostname_12768697.err
+evals/hostname_12768697.out
+evals/results/gifs/gravity_0_0.gif
+evals/results/gifs/gravity_0_1.gif
+evals/results/gifs/gravity_0_2.gif
+
+sent 4,474,916 bytes  received 275 bytes  1,790,076.40 bytes/sec
+total size is 38,040,498  speedup is 8.50
+Agent pid 272941
+sending incremental file list
+
+sent 750 bytes  received 12 bytes  1,524.00 bytes/sec
+total size is 32,448,341  speedup is 42,583.12

@@ -1,0 +1,85 @@
+sending incremental file list
+evals/
+evals/eval_gravity.py
+evals/eval_wind.py
+evals/gif_gravity.py
+evals/gif_wind.py
+evals/gravity.png
+evals/hostname_12766057.err
+evals/hostname_12766057.out
+evals/output.gif
+evals/plot_gravity.py
+evals/plot_wind.py
+evals/submit_gifs.sh
+evals/wind.png
+evals/results/
+evals/results/eval11.npy
+evals/results/eval11_before.npy
+evals/results/eval3.npy
+evals/results/eval3_before.npy
+evals/results/gifs/
+exp1_10/hostname_12682220.err
+exp1_10/hostname_12682220.out
+exp1_10/hostname_12682221.err
+exp1_10/hostname_12682221.out
+exp1_10/hostname_12682222.err
+exp1_10/hostname_12682222.out
+exp1_10/hostname_12682223.err
+exp1_10/hostname_12682223.out
+exp1_10/results/ddqn/cp_local.pt
+exp1_10/results/ddqn/cp_target.pt
+exp1_10/results/ddqn/logfile.txt
+exp1_10/results/ddqn/score.npy
+exp1_10/results/fittedq/cp_.pt
+exp1_10/results/fittedq/logfile.txt
+exp1_10/results/fittedq/score.npy
+exp1_10/results/ppo/cp_.zip
+exp1_10/results/ppo/logfile.txt
+exp1_10/results/trpo/cp.zip
+exp1_10/results/trpo/logfile.txt
+exp1_15/hostname_12682228.err
+exp1_15/hostname_12682228.out
+exp1_15/hostname_12682229.err
+exp1_15/hostname_12682229.out
+exp1_15/hostname_12682230.err
+exp1_15/hostname_12682230.out
+exp1_15/hostname_12682231.err
+exp1_15/hostname_12682231.out
+exp1_15/results/ddqn/cp_local.pt
+exp1_15/results/ddqn/cp_target.pt
+exp1_15/results/ddqn/logfile.txt
+exp1_15/results/ddqn/score.npy
+exp1_15/results/fittedq/cp_.pt
+exp1_15/results/fittedq/logfile.txt
+exp1_15/results/fittedq/score.npy
+exp1_15/results/ppo/cp_.zip
+exp1_15/results/ppo/logfile.txt
+exp1_15/results/trpo/cp.zip
+exp1_15/results/trpo/logfile.txt
+exp1_5/hostname_12682203.err
+exp1_5/hostname_12682203.out
+exp1_5/hostname_12682204.err
+exp1_5/hostname_12682204.out
+exp1_5/hostname_12682205.err
+exp1_5/hostname_12682205.out
+exp1_5/hostname_12682206.err
+exp1_5/hostname_12682206.out
+exp1_5/results/ddqn/cp_local.pt
+exp1_5/results/ddqn/cp_target.pt
+exp1_5/results/ddqn/logfile.txt
+exp1_5/results/ddqn/score.npy
+exp1_5/results/fittedq/cp_.pt
+exp1_5/results/fittedq/logfile.txt
+exp1_5/results/fittedq/score.npy
+exp1_5/results/ppo/cp_.zip
+exp1_5/results/ppo/logfile.txt
+exp1_5/results/trpo/cp.zip
+exp1_5/results/trpo/logfile.txt
+
+sent 1,136,238 bytes  received 1,560 bytes  175,045.85 bytes/sec
+total size is 5,578,762  speedup is 4.90
+Agent pid 396585
+sending incremental file list
+
+sent 210 bytes  received 12 bytes  444.00 bytes/sec
+total size is 4,398,252  speedup is 19,811.95

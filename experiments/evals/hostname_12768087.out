@@ -1,0 +1,30 @@
+sending incremental file list
+evals/
+evals/gif_wind.py
+evals/hostname_12766665.err
+evals/hostname_12766665.out
+evals/hostname_12768087.err
+evals/hostname_12768087.out
+evals/submit_gifs.sh
+evals/results/gifs/
+evals/results/gifs/gravity_0_0.gif
+evals/results/gifs/gravity_0_1.gif
+evals/results/gifs/gravity_0_2.gif
+evals/results/gifs/gravity_0_3.gif
+evals/results/gifs/gravity_1_0.gif
+evals/results/gifs/gravity_1_1.gif
+evals/results/gifs/gravity_1_2.gif
+evals/results/gifs/gravity_1_3.gif
+evals/results/gifs/gravity_2_0.gif
+evals/results/gifs/gravity_2_1.gif
+evals/results/gifs/gravity_2_2.gif
+evals/results/gifs/gravity_2_3.gif
+evals/results/gifs/wind_0_0.gif
+evals/results/gifs/wind_0_1.gif
+evals/results/gifs/wind_0_2.gif
+evals/results/gifs/wind_0_3.gif
+evals/results/gifs/wind_1_0.gif
+
+sent 21,834,740 bytes  received 563 bytes  8,734,121.20 bytes/sec
+total size is 27,391,147  speedup is 1.25
+Agent pid 4085476

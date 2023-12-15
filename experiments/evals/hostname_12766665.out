@@ -1,0 +1,22 @@
+sending incremental file list
+evals/
+evals/hostname_12766057.err
+evals/hostname_12766057.out
+evals/hostname_12766665.err
+evals/hostname_12766665.out
+evals/submit_gifs.sh
+evals/results/gifs/
+evals/results/gifs/gravity_0_0.gif
+evals/results/gifs/wind_0_0.gif
+evals/results/gifs/wind_0_1.gif
+evals/results/gifs/wind_0_2.gif
+evals/results/gifs/wind_0_3.gif
+evals/results/gifs/wind_1_0.gif
+
+sent 4,418,789 bytes  received 335 bytes  2,946,082.67 bytes/sec
+total size is 9,980,958  speedup is 2.26
+Agent pid 397876
+sending incremental file list
+
+sent 468 bytes  received 12 bytes  960.00 bytes/sec
+total size is 21,805,748  speedup is 45,428.64
